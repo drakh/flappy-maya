@@ -318,11 +318,6 @@ var Game          = new Class({
 });
 
 var App = {
-	urls: {
-		vote: d_base + "/",
-		start: d_base + "/",
-		score: d_base + "/",
-	},
 	init: function ()
 	{
 		$('homebutton').addEvent('click', function ()
@@ -334,9 +329,6 @@ var App = {
 		this.snd_btn  = $('soundtoggle');
 		this.snd_btn.addEvent('click', this.mute.bind(this));
 		this.va           = $('voteadd');
-		this.add_vote_req = new Request.JSON({url: this.urls.vote, onSuccess: this.vote_resp.bind(this)});
-		this.start_req    = new Request.JSON({url: this.urls.start});
-		this.score_req    = new Request.JSON({url: this.urls.score});
 		this.limit        = 100;
 		this.is_win       = false;
 		this.current      = 0;
@@ -424,7 +416,6 @@ var App = {
 	{
 		e.stop();
 		this.reset();
-		this.start_req.post();
 		document.body.addClass('gamepart');
 		this.g.reset();
 		this.g.start();
@@ -487,7 +478,6 @@ var App = {
 	},
 	send_score: function (c)
 	{
-		this.score_req.post({score: c});
 	},
 	send_vote: function (c)
 	{
@@ -496,8 +486,6 @@ var App = {
 		this.bonussound[r].currentTime = 0;
 		this.bonussound[r].play();
 		this.hide_bar();
-		this.add_vote_req.cancel();
-		this.add_vote_req.post({score: c});
 	},
 	vote_resp: function (o)
 	{
