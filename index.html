@@ -1,0 +1,165 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1. user-scalable=no">
+    <title>LIDL ihrisko Žihadielko - Uletená Maja</title>
+    <link rel="stylesheet" href="assets/css/page.css?v=1.0">
+    <script src="bower_components/pixi.js/bin/pixi.min.js"></script>
+    <script src="bower_components/mootools/dist/mootools-core.min.js"></script>
+    <script src="assets/js/BeeRgb.js"></script>
+    <script src="assets/js/BeeAlpha.js"></script>
+    <script src="assets/js/Bg.js"></script>
+    <script src="assets/js/SlidesRgb.js"></script>
+    <script src="assets/js/SlidesAlpha.js"></script>
+    <script src="assets/js/Game.js?v=1.0"></script>
+</head>
+<body class="loading">
+<header class="sound">
+    <button id="soundtoggle"><i class="fa fa-volume-off" aria-hidden="true"></i><i class="fa fa-volume-up" aria-hidden="true"></i></button>
+    <audio src="assets/sound/music.mp3" preload="auto" loop autoplay id="musicsound"></audio>
+    
+    <audio src="assets/sound/bzukot_0.mp3" preload="auto" loop id="flysound"></audio>
+    
+    <audio src="assets/sound/bonus_0.mp3" preload="auto" class="bonussound"></audio>
+    <audio src="assets/sound/bonus_1.mp3" preload="auto" class="bonussound"></audio>
+    <audio src="assets/sound/bonus_2.mp3" preload="auto" class="bonussound"></audio>
+    
+    <audio src="assets/sound/naraz_0.mp3" preload="auto" class="crashsound"></audio>
+    <audio src="assets/sound/naraz_1.mp3" preload="auto" class="crashsound"></audio>
+    <audio src="assets/sound/naraz_2.mp3" preload="auto" class="crashsound"></audio>
+    
+    <audio src="assets/sound/votes_succes.mp3" preload="auto" id="successound"></audio>
+</header>
+<section class="part portrait">
+    <div><i class="fa fa-refresh" aria-hidden="true"></i><br>Otoč svoje zariadenie na ležato</div>
+</section>
+
+<section class="part loader">
+    <div class="preloader animation">
+        <span class="slice"></span>
+        <span class="slice"></span>
+        <span class="slice"></span>
+        <span class="slice"></span>
+        <span class="slice"></span>
+        <span class="slice"></span>
+    </div>
+    <div class="txt">Strpenie, Maja sa rozcvičuje</div>
+</section>
+
+<section class="part main-bg main">
+    <header>
+        <span class="maja-anim-logo"><img src="assets/img/logo.png" width="232" height="139"></span>
+        <div>Preleť so včielkou Majou pomedzi všetky prekážky, ktoré máš v ceste</div>
+        <div class="strong">a získaj jeden hlas naviac pre svoje mesto.</div>
+    </header>
+    <nav class="menu">
+        <ul>
+            <li class="start">
+                <button class="start">ŠTART</button>
+            </li>
+            <li class="top">
+                <button id="toptenbtn">TOP 10</button>
+            </li>
+            <li class="left">
+                <button id="homebutton"><i class="fa fa-home" aria-hidden="true"></i></button>
+            </li>
+            <li class="right">
+                <button id="rulesbtn">pravidlá</button>
+            </li>
+        </ul>
+    </nav>
+</section>
+
+<section class="part main-bg rules">
+    <div class="black">
+        <div class="white-hexa">
+            <button class="close"></button>
+            <article>
+                <header>Pravidlá</header>
+                <p>
+                    <strong>Preleť so včielkou Majou čo najďalej pomedzi všetky prekážky, ktoré máš v ceste a získaj bonusový hlas pre svoje mesto.</strong>
+                </p>
+                <p>Výšku letu včielky Maje určuješ klikaním na ľavé tlačítko myši, alebo klávesou MEDZERNÍK, alebo dotykom prsta (v prípade mobilov a tabletov).</p>
+                <p><img src="assets/img/mouse.png" class="mouse"></p>
+                <p>Pre získanie bonusového hlasu pre tvoje mesto je potrebné preletieť aspoň 100 metrov. Každý deň môžeš v hre získať maximálne jeden bonusový hlas a priráta sa vždy automaticky k mestu, za ktoré si naposledy hlasoval/a.</p>
+            </article>
+            <div class="yellow-hexa">
+                <button class="start">ŠTART</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="part main-bg topten">
+    <div class="black">
+        <div class="white-hexa">
+            <button class="close"></button>
+            <article>
+                <header>Top 10 hráčov</header>
+                <ul>{{top_10}}</ul>
+            </article>
+            <div class="yellow-hexa">
+                <button class="start">ŠTART</button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="part main-bg failed">
+    <div class="black">
+        <div class="leaf">
+            <button class="close"></button>
+            <article>
+                <header>Ajajaaaj</header>
+                <p>So Včielkou Majou si preletel</p>
+                <div class="distance"><span class="amount">0</span><span>metrov</span></div>
+                <p class="smaller hide_on_vote">no pre získanie bonusového hlasu to musí byť aspoň 100 metrov.</p>
+                <p class="smaller show_on_vote">Myslíš, že by si dokázal zaletieť aj ďalej?</p>
+                <p class="bigger"><strong>Neváhaj<br>
+                    a skús to znova!</strong></p>
+            </article>
+            <div class="yellow-hexa">
+                <button class="start">ŠTART</button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="part main-bg success">
+    <div class="black">
+        <div class="leaf succ">
+            <button class="close"></button>
+            <article>
+                <header>Woooow!</header>
+                <p>
+                    So Včielkou Majou si preletel
+                </p>
+                <div class="distance">
+                    <img src="assets/img/win_maya.png"><span class="amount">0</span><span>metrov</span>
+                </div>
+                <p class="smaller hide_on_vote">a preto získavaš <strong>bonusový hlas</strong>,<br>ktorý sme automaticky prirátali k mestu,<br>za ktoré si naposledy hlasoval.</p>
+                <p class="smaller show_on_vote">Myslíš, že by si dokázal zaletieť aj ďalej?</p>
+                <p class="bigger"><strong>Nezabudni hlasovať<br>
+                    a hrať aj zajtra!</strong></p>
+            </article>
+            <div class="yellow-hexa">
+                <button class="start">ŠTART</button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="part game">
+    <canvas id="game-canvas" width="640" height="480"></canvas>
+    <div class="progress">
+        <div class="dist"><span class="amount">0</span></div>
+        <div class="bar" id="bar">
+            <div class="inner" id="prog"></div>
+            <div class="vote_maya">
+                <div class="voteadd" id="voteadd"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer>
+    <img src="assets/img/studio_copyright.png" width="159" height="78">
+</footer>
+</body>
+</html>

@@ -1,0 +1,702 @@
+@import "pure-min";
+@import "font-awesome.min";
+@import "fonts";
+
+$large : "screen and (min-width : 80em)";
+$medium : "screen and (min-width : 64em)";
+$small : "screen and (min-width : 48em)";
+$xsmall : "screen and (min-width : 35.5em)";
+$portait : "screen and (orientation:portrait)";
+$landscape : "screen and (orientation:landscape)";
+
+$white : #fff;
+$blue : #0e5da0;
+$yellow : #ffc50d;
+$grey : #5a636b;
+$green : #388020;
+$velvet : #5f1a7e;
+*
+{
+  box-sizing : border-box;
+}
+
+button:active
+{
+  outline : none;
+  border  : none;
+}
+
+button:focus
+{ outline : 0; }
+
+html, body
+{
+  position       : relative;
+  width          : 100%;
+  height         : 100%;
+  overflow       : hidden;
+  font-family    : 'Open ans', sans-serif;
+  font-weight    : 400;
+  pointer-events : all;
+}
+
+@for $i from 1 through 6
+{
+  @keyframes preload-show-#{$i}{
+	from
+	{
+	  transform         : rotateZ(60* $i + deg) rotateY(-90deg) rotateX(0deg);
+	  border-left-color : $yellow;
+	}
+  }
+  @keyframes preload-hide-#{$i}{
+	to
+	{
+	  transform         : rotateZ(60* $i + deg) rotateY(-90deg) rotateX(0deg);
+	  border-left-color : $yellow;
+	}
+  }
+
+  @keyframes preload-cycle-#{$i}{
+	$startIndex : $i*5;
+	$reverseIndex : (80 - $i*5);
+
+	#{$startIndex * 1%}
+	{
+	  transform         : rotateZ(60* $i + deg) rotateY(90deg) rotateX(0deg);
+	  border-left-color : $yellow;
+	}
+	#{$startIndex + 5%},
+	#{$reverseIndex * 1%}
+	{
+	  transform         : rotateZ(60* $i + deg) rotateY(0) rotateX(0deg);
+	  border-left-color : $yellow;
+	}
+
+	#{$reverseIndex + 5%},
+	100%
+	{
+	  transform         : rotateZ(60* $i + deg) rotateY(90deg) rotateX(0deg);
+	  border-left-color : $yellow;
+	}
+  }
+}
+
+@keyframes preload-flip
+{
+  0%
+  {
+	transform : rotateY(0deg) rotateZ(-60deg);
+  }
+  100%
+  {
+	transform : rotateY(360deg) rotateZ(-60deg);
+  }
+}
+
+.preloader
+{
+  position         : absolute;
+  top              : 50%;
+  left             : 50%;
+  font-size        : 20px;
+  display          : block;
+  width            : 3.75em;
+  height           : 4.25em;
+  margin-left      : -1.875em;
+  margin-top       : -2.125em;
+  transform-origin : center center;
+  transform        : rotateY(180deg) rotateZ(-60deg);
+
+  .slice
+  {
+	border-top       : 1.125em solid transparent;
+	border-right     : none;
+	border-bottom    : 1em solid transparent;
+	border-left      : 1.875em solid #f7484e;
+	position         : absolute;
+	top              : 0px;
+	left             : 50%;
+	transform-origin : left bottom;
+	border-radius    : 3px 3px 0 0;
+  }
+
+  @for $i from 1 through 6
+  {
+	.slice:nth-child(#{$i})
+	{
+	  transform : rotateZ(60* $i + deg) rotateY(0deg) rotateX(0);
+	  animation : .15s linear .9 - $i*.08s preload-hide-#{$i} both 1;
+	}
+  }
+
+  &.animation
+  {
+	animation : 2s preload-flip steps(2) infinite both;
+	@for $i from 1 through 6
+	{
+	  .slice:nth-child(#{$i})
+	  {
+		transform : rotateZ(60* $i + deg) rotateY(90deg) rotateX(0);
+		animation : 2s preload-cycle-#{$i} linear infinite both;
+	  }
+	}
+  }
+
+}
+
+.loader
+{
+  color       : $yellow;
+  font-weight : 700;
+  display     : flex;
+  .txt
+  {
+	font-size   : 2rem;
+	margin      : auto;
+	padding-top : 8rem;
+  }
+}
+
+.maja-anim-logo
+{
+  display        : block;
+  width          : 25vh;
+  margin-right   : auto;
+  margin-left    : auto;
+  position       : relative;
+  padding-top    : 2.5vh;
+  padding-bottom : 2.5vh;
+  img
+  {
+	width  : 100%;
+	height : auto;
+  }
+}
+
+.part
+{
+  position : absolute;
+  width    : 100%;
+  height   : 100%;
+  left     : 0;
+  top      : 0;
+}
+
+.main-bg
+{
+  background-image    : url(../img/layout_bg.jpg);
+  background-position : center center;
+  background-repeat   : no-repeat;
+  background-size     : cover;
+}
+
+.game
+{
+  display        : block;
+  pointer-events : all;
+  canvas
+  {
+	pointer-events : none;
+  }
+}
+
+.rules
+{
+  display : none;
+}
+
+.main
+{
+  display        : flex;
+  flex-direction : column;
+  header
+  {
+	color : $blue;
+	div
+	{
+	  text-align : center;
+	  font-size  : 2vh;
+	  &.strong
+	  {
+		font-weight    : 700;
+		padding-bottom : 2.5vh;
+		font-size      : 2.5vh;
+	  }
+	}
+  }
+  .menu
+  {
+	flex-grow : 1;
+  }
+}
+
+.menu
+{
+  $h : 30vh;
+  $w : 1.122*$h;
+
+  ul
+  {
+	padding        : 0;
+	margin         : 0;
+	margin-left    : auto;
+	margin-right   : auto;
+	list-style     : none;
+	position       : relative;
+	width          : $w;
+	display        : flex;
+	flex-direction : column;
+	li
+	{
+	  background-size : cover;
+	  width           : $w;
+	  height          : $h;
+	  display         : flex;
+	  align-items     : center;
+	  button, a
+	  {
+		margin         : 0;
+		margin-left    : auto;
+		margin-right   : auto;
+		padding        : 1rem;
+		cursor         : pointer;
+		border         : none;
+		background     : none;
+		text-transform : uppercase;
+	  }
+	  color           : $white;
+	  font-weight     : 700;
+	  text-transform  : uppercase;
+	  font-size       : 4vh;
+	  &.start
+	  {
+		background-image : url(../img/hexa_y.png);
+	  }
+	  &.top
+	  {
+		background-image : url(../img/hexa_v.png);
+	  }
+	  &.left, &.right
+	  {
+		color            : $blue;
+		font-size        : 2vh;
+		position         : absolute;
+		width            : $w/2;
+		height           : $h/2;
+		background-image : url(../img/hexa_s.png);
+		top              : $h -$h/4;
+	  }
+	  &.left
+	  {
+		left : -$w/4;
+	  }
+	  &.right
+	  {
+		right : -$w/4;
+	  }
+	}
+  }
+}
+
+.rules, .topten
+{
+  display : flex;
+}
+
+.loading
+{
+  .main, .rules, .topten, .failed, .success, .game
+  {
+	display : none;
+  }
+}
+
+.mainpart
+{
+  .loader, .rules, .topten, .failed, .success, .game
+  {
+	display : none;
+  }
+}
+
+.rulespart
+{
+  .main, .loader, .topten, .failed, .success, .game
+  {
+	display : none;
+  }
+}
+
+.toptenpart
+{
+  .main, .rules, .loader, .failed, .success, .game
+  {
+	display : none;
+  }
+}
+
+.failedpart
+{
+  .main, .rules, .topten, .loader, .success, .game
+  {
+	display : none;
+  }
+}
+
+.succespart
+{
+  .main, .rules, .topten, .failed, .loader, .game
+  {
+	display : none;
+  }
+}
+
+.gamepart
+{
+  .main, .rules, .topten, .failed, .success, .loader, footer
+  {
+	display : none;
+  }
+}
+
+#game-canvas
+{
+  position : absolute;
+}
+
+.progress
+{
+  position    : absolute;
+  align-items : center;
+  display     : flex;
+  width       : 100%;
+  z-index     : 5;
+  left        : 0;
+  bottom      : 1vh;
+  .dist
+  {
+	$h : 12vh;
+	background-image  : url(../img/hexa_v.png);
+	background-size   : contain;
+	background-repeat : no-repeat;
+	font-size         : 2vh;
+	width             : $h;
+	height            : $h*0.89;
+	color             : $white;
+	text-align        : center;
+	display           : flex;
+	align-items       : center;
+	span
+	{
+	  display     : block;
+	  margin      : auto;
+	  font-weight : 700;
+	}
+  }
+  .bar
+  {
+	flex-grow        : 1;
+	margin-right     : 2rem;
+	margin-left      : 2rem;
+	background-color : $white;
+	position         : relative;
+	border-radius    : 0.5rem;
+	box-shadow       : 0px 0px 0px 8px rgba(255, 255, 255, 0.3);
+	.inner
+	{
+	  width            : 0%;
+	  height           : 0.5rem;
+	  background-color : $yellow;
+	  border-radius    : 0.5rem;
+	}
+  }
+}
+
+.portrait
+{
+  display          : none;
+  background-color : $blue;
+  color            : $yellow;
+  div
+  {
+	margin     : auto;
+	font-size  : 4rem;
+	text-align : center;
+	padding    : 1rem;
+  }
+}
+
+.close
+{
+  position         : absolute;
+  width            : 53px;
+  height           : 60px;
+  background-image : url(../img/close_btn.png);
+  background-size  : cover;
+  background-color : transparent;
+  border           : none;
+}
+
+.yellow-hexa
+{
+  background-image : url(../img/hexa_y.png);
+  background-size  : cover;
+  width            : 20vh;
+  height           : 17.81vh;
+  position         : absolute;
+  display          : flex;
+  button
+  {
+	margin      : auto;
+	background  : transparent;
+	border      : none;
+	font-weight : 700;
+	color       : $white;
+	font-size   : 2.5vh;
+  }
+}
+
+.white-hexa
+{
+  background-image  : url(../img/white_hexa.png);
+  background-repeat : no-repeat;
+  background-size   : cover;
+  height            : 70vh;
+  width             : 80vh;
+  margin            : auto;
+  position          : relative;
+  .close
+  {
+	top  : -25px;
+	left : 72%;
+  }
+  article
+  {
+	width       : 50%;
+	margin      : auto;
+	text-align  : center;
+	padding-top : 4vh;
+	font-size   : 1.8vh;
+	color       : $grey;
+  }
+  header
+  {
+	font-weight    : 700;
+	color          : $blue;
+	font-size      : 5vh;
+	padding-bottom : 2vh;
+  }
+  .yellow-hexa
+  {
+	bottom : -10vh;
+	left   : 30.7vh;
+  }
+}
+
+.leaf
+{
+  background-image  : url(../img/bg_lose.png);
+  background-repeat : no-repeat;
+  background-size   : cover;
+  height            : 80vh;
+  width             : 71.37vh;
+  margin-left       : auto;
+  margin-right      : auto;
+  position          : relative;
+  .close
+  {
+	right : 2.2vh;
+	top   : 5.2vh;
+  }
+  .yellow-hexa
+  {
+	bottom : -2vh;
+	left   : 24.5vh;
+  }
+  article
+  {
+	color         : $white;
+	text-align    : center;
+	padding-top   : 10vh;
+	font-size     : 2vh;
+	padding-left  : 22vh;
+	padding-right : 22vh;
+	header
+	{
+	  font-weight   : 700;
+	  margin-bottom : 13vh;
+	  font-size     : 6vh;
+	}
+	.distance
+	{
+	  border        : 1px solid $white;
+	  padding       : 1vh;
+	  border-radius : 0.5vh;
+	  span
+	  {
+		display : block;
+		&.amount
+		{
+		  font-size   : 4vh;
+		  font-weight : 700;
+		}
+	  }
+	}
+  }
+  &.succ
+  {
+	background-image : url(../img/bg_win.png);
+	article
+	{
+	  header
+	  {
+		margin-bottom : inherit;
+	  }
+	  .distance
+	  {
+		background-color : $green;
+		position         : relative;
+		margin-top       : 11vh;
+		img
+		{
+		  position : absolute;
+		  height   : auto;
+		  width    : 12vh;
+		  top      : -9vh;
+		  left     : 10.5vh;
+		}
+	  }
+	}
+  }
+
+}
+
+@media screen and (orientation : portrait) {
+  .portrait
+  {
+	display : flex;
+  }
+  .loader, .main, .rules, .topten, .failed, .success, .game
+  {
+	display : none;
+  }
+}
+
+.voteadd
+{
+  background-image : url(../img/vote.png);
+  position         : absolute;
+  background-size  : cover;
+  right            : -2vh;
+  top              : -4vh;
+  width            : 4.09vh;
+  height           : 8vh;
+  opacity          : 0;
+  transition       : all 200ms;
+  &.visible
+  {
+	opacity : 1;
+  }
+}
+
+footer
+{
+  position : absolute;
+  right    : 1vw;
+  bottom   : 1vh;
+  img
+  {
+	width  : auto;
+	height : 8vh;
+  }
+}
+
+.black
+{
+  display          : flex;
+  width            : 100%;
+  height           : 100%;
+  position         : relative;
+  background-color : rgba(0, 0, 0, 0.65);
+}
+
+audio
+{
+  display : none;
+}
+
+header
+{
+  &.sound
+  {
+	position : absolute;
+	z-index  : 999;
+	top      : 2vh;
+	right    : 2vh;
+	button
+	{
+	  color            : $velvet;
+	  border           : none;
+	  text-align       : center;
+	  padding          : 0;
+	  margin           : 0;
+	  background-color : transparent;
+	  font-size        : 4vh;
+	  background-image : url(../img/sound.png);
+	  background-size  : cover;
+	  width            : 8vh;
+	  height           : 9.14vh;
+	  i
+	  {
+		display : block;
+	  }
+	  .fa-volume-off
+	  {
+		display : none;
+	  }
+	  &.mute
+	  {
+		.fa-volume-off
+		{
+		  display : block;
+		}
+		.fa-volume-up
+		{
+		  display : none;
+		}
+	  }
+	}
+  }
+}
+
+.mouse
+{ width : auto; height : 10vh }
+
+.show_on_vote
+{
+  display : none;
+}
+
+.already_voted
+{
+  .hide_on_vote
+  {
+	display : none
+  }
+  .show_on_vote
+  {
+	display : block;
+  }
+  &.new_vote
+  {
+	.hide_on_vote
+	{
+	  display : block;
+	}
+	.show_on_vote
+	{
+	  display : none;
+	}
+  }
+}
